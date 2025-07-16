@@ -4,7 +4,7 @@ import * as bcrypt from 'bcryptjs';
 
 import { CreateUserDTO } from '../dtos/create-user.dto';
 import { PrismaService } from 'src/modules/prisma/prisma.service';
-import { MailService } from 'src/modules/shared/mail.service';
+import { MailService } from 'src/modules/shared/app/services/mail.service';
 
 @Injectable()
 export class UserService {

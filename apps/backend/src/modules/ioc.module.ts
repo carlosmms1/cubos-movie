@@ -4,6 +4,7 @@ import { JwtModule } from '@nestjs/jwt';
 
 import { jwtConfig } from 'src/configs/jwt.config';
 import { smtpConfig } from 'src/configs/smtp.config';
+import { s3Config } from 'src/configs/s3.config';
 
 import { PrismaModule } from './prisma/prisma.module';
 import { UserModule } from './user/user.module';
@@ -13,7 +14,7 @@ import { AuthModule } from './auth/auth.module';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [jwtConfig, smtpConfig],
+      load: [jwtConfig, smtpConfig, s3Config],
     }),
     JwtModule.registerAsync({
       global: true,
