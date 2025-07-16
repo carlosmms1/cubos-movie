@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 import searchIcon from "@/assets/icons/search.svg";
+import { AddMovie } from "./form/movie/add-movie";
 
 export function Filters() {
   return (
@@ -21,8 +22,9 @@ export function Filters() {
           <img src={searchIcon} aria-hidden={true} />
         </label>
       </div>
+
       <Button className="bg-primary/20 hover:bg-primary/30">Filtros</Button>
-      <Button>Adicionar Filme</Button>
+      <AddMovie />
     </section>
   );
 }
