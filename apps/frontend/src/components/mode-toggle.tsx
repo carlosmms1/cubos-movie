@@ -1,6 +1,7 @@
-import { SunMediumIcon } from "lucide-react";
 import { useTheme } from "./theme-provider";
 import { Button } from "./ui/button";
+
+import sunIcon from "@/assets/icons/sun.svg";
 
 export function ModeToggle() {
   const { setTheme, theme } = useTheme();
@@ -15,7 +16,7 @@ export function ModeToggle() {
       onClick={toggleTheme}
       type="button"
     >
-      <SunMediumIcon className="h-4" />
+      <img src={sunIcon} aria-hidden={true} />
     </Button>
   );
 }
