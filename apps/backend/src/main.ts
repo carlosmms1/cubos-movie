@@ -1,8 +1,12 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
+import { ValidationPipe } from '@nestjs/common';
+
+import { IoCModule } from './modules/ioc.module';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-  await app.listen(3000);
+  const ioc = await NestFactory.create(IoCModule);
+  ioc.enableCors();
+  ioc.useGlobalPipes(new ValidationPipe());
+  await ioc.listen(3000);
 }
 bootstrap();
