@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -8,10 +10,20 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { MovieForm } from ".";
+import { useCreateMovie } from "@/hooks/mutations/movie";
 
 export function AddMovie() {
+  const [open, setOpen] = useState(false);
+
+  const { mutate: createMovie, isPending: isCreateMoviePending } =
+    useCreateMovie({
+      onDone() {
+        setOpen(false);
+      },
+    });
+
   return (
-    <Sheet>
+    <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
         <Button>Adicionar Filme</Button>
       </SheetTrigger>
@@ -23,8 +35,8 @@ export function AddMovie() {
           </SheetDescription>
         </SheetHeader>
 
-        <div className="p-3">
-          <MovieForm />
+        <div className="h-full overflow-y-scroll p-3">
+          <MovieForm onSubmit={createMovie} isPending={isCreateMoviePending} />
         </div>
       </SheetContent>
     </Sheet>
