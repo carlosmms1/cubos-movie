@@ -1,9 +1,13 @@
 import { AlertCircleIcon, ImageUpIcon, XIcon } from "lucide-react";
 
-import { useFileUpload } from "@/hooks/use-file-upload";
+import { useFileUpload, type FileUploadOptions } from "@/hooks/use-file-upload";
 
-export default function FileUpload() {
-  const maxSizeMB = 5;
+interface FileUploadProps {
+  maxSizeMB?: number;
+  options?: FileUploadOptions;
+}
+
+export function FileUpload({ maxSizeMB = 5, options = {} }: FileUploadProps) {
   const maxSize = maxSizeMB * 1024 * 1024; // 5MB default
 
   const [
@@ -20,6 +24,7 @@ export default function FileUpload() {
   ] = useFileUpload({
     accept: "image/*",
     maxSize,
+    ...options,
   });
 
   const previewUrl = files[0]?.preview || null;
@@ -36,7 +41,7 @@ export default function FileUpload() {
           onDragOver={handleDragOver}
           onDrop={handleDrop}
           data-dragging={isDragging || undefined}
-          className="border-input hover:bg-accent/50 data-[dragging=true]:bg-accent/50 has-[input:focus]:border-ring has-[input:focus]:ring-ring/50 relative flex min-h-52 flex-col items-center justify-center overflow-hidden rounded-xl border border-dashed p-4 transition-colors has-disabled:pointer-events-none has-disabled:opacity-50 has-[img]:border-none has-[input:focus]:ring-[3px]"
+          className="border-border/70 hover:bg-accent/50 data-[dragging=true]:bg-accent/50 has-[input:focus]:border-ring has-[input:focus]:ring-ring/50 relative flex min-h-96 flex-col items-center justify-center overflow-hidden rounded-sm border border-dashed p-4 transition-colors has-disabled:pointer-events-none has-disabled:opacity-50 has-[img]:border-none has-[input:focus]:ring-[3px]"
         >
           <input
             {...getInputProps()}
@@ -48,7 +53,7 @@ export default function FileUpload() {
               <img
                 src={previewUrl}
                 alt={files[0]?.file?.name || "Uploaded image"}
-                className="size-full object-cover"
+                className="size-full object-contain"
               />
             </div>
           ) : (
@@ -60,10 +65,10 @@ export default function FileUpload() {
                 <ImageUpIcon className="size-4 opacity-60" />
               </div>
               <p className="mb-1.5 text-sm font-medium">
-                Drop your image here or click to browse
+                Arraste e solte a imagem aqui ou clique para procurar
               </p>
               <p className="text-muted-foreground text-xs">
-                Max size: {maxSizeMB}MB
+                Máximo: {maxSizeMB}MB
               </p>
             </div>
           )}
@@ -91,20 +96,6 @@ export default function FileUpload() {
           <span>{errors[0]}</span>
         </div>
       )}
-
-      <p
-        aria-live="polite"
-        role="region"
-        className="text-muted-foreground mt-2 text-center text-xs"
-      >
-        Single image uploader w/ max size ∙{" "}
-        <a
-          href="https://github.com/origin-space/originui/tree/main/docs/use-file-upload.md"
-          className="hover:text-foreground underline"
-        >
-          API
-        </a>
-      </p>
     </div>
   );
 }
