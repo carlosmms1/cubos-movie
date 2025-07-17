@@ -16,5 +16,40 @@ model User {
   emailConfirmed         Boolean @default(false)
   emailConfirmationToken String?
 
+  movies Movie[]
+
   @@map("user")
+}
+
+enum MovieStatus {
+  RELEASED
+  UPCOMING
+}
+
+model Movie {
+  id            String      @id @default(uuid())
+  title         String      @db.VarChar(255)
+  originalTitle String      @db.VarChar(255)
+  description   String
+  release       DateTime
+  duration      Int
+  genre         String[]
+  director      String
+  cast          String
+  coverImage    String
+  languages     String[]
+  budget        String
+  revenue       String
+  profit        String
+  trailerUrl    String
+  status        MovieStatus @default(UPCOMING)
+  popularity    Int         @default(0)
+  voteCount     Int         @default(0)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  creator   User   @relation(fields: [creatorId], references: [id])
+  creatorId String
+
+  @@map("movie")
 }
