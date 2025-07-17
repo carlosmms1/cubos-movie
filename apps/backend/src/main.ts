@@ -6,7 +6,7 @@ import { IoCModule } from './modules/ioc.module';
 async function bootstrap() {
   const ioc = await NestFactory.create(IoCModule);
   ioc.enableCors();
-  ioc.useGlobalPipes(new ValidationPipe());
+  ioc.useGlobalPipes(new ValidationPipe({ transform: true }));
   await ioc.listen(3000);
 }
 bootstrap();
