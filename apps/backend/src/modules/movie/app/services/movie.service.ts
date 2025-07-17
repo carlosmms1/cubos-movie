@@ -88,7 +88,7 @@ export class MovieService {
         where,
         skip,
         take: pageSize,
-        orderBy: { release: 'desc' },
+        orderBy: { createdAt: 'desc' },
       }),
       this.prisma.movie.count({ where }),
     ]);
