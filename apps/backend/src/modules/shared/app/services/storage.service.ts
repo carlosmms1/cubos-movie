@@ -1,6 +1,7 @@
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { randomUUID } from 'node:crypto';
 
 @Injectable()
 export class StorageService {
@@ -21,7 +22,7 @@ export class StorageService {
   }
 
   async uploadFile(file: Express.Multer.File): Promise<string> {
-    const fileName = `${Date.now()}-${file.originalname}`;
+    const fileName = `${randomUUID()}-${file.originalname}`;
     await this.s3.send(
       new PutObjectCommand({
         Bucket: this.bucket,
@@ -32,7 +33,6 @@ export class StorageService {
       }),
     );
 
-    // URL pública (ajuste conforme seu ambiente)
     const endpoint =
       this.configService.get<string>('s3.publicUrl') ??
       this.s3.config.endpoint.toString();
