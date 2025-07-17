@@ -1,3 +1,6 @@
+import { useEffect, useState } from "react";
+import { useNavigate } from "@tanstack/react-router";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
@@ -5,6 +8,27 @@ import searchIcon from "@/assets/icons/search.svg";
 import { AddMovie } from "./form/movie/add-movie";
 
 export function Filters() {
+  const navigate = useNavigate();
+  const [searchTitle, setSearchTitle] = useState("");
+
+  useEffect(() => {
+    const debounceDelay = 800;
+    const handler = setTimeout(() => {
+      navigate({
+        to: "/",
+        search: {
+          ...(searchTitle.length
+            ? { title: searchTitle }
+            : { title: undefined }),
+        },
+      });
+    }, debounceDelay);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [searchTitle]);
+
   return (
     <section className="flex justify-end items-center space-x-3">
       <div className="relative max-w-[488px] w-full">
@@ -12,6 +36,10 @@ export function Filters() {
           id="search"
           placeholder="Pesquise por filmes"
           className="w-full"
+          value={searchTitle}
+          onChange={(e) => {
+            setSearchTitle(e.target.value);
+          }}
         />
         <label
           className="text-muted-foreground/80 hover:text-foreground focus-visible:border-ring focus-visible:ring-ring/50 absolute inset-y-0 end-2 flex h-full w-9 items-center justify-center rounded-e-md transition-[color,box-shadow] outline-none focus:z-10 focus-visible:ring-[3px] disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50"
