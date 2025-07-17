@@ -13,7 +13,7 @@ services:
       - cubos_db_data:/var/lib/postgresql/data
 
   minio:
-    image: quay.io/minio/minio
+    image: quay.io/minio/minio:RELEASE.2025-02-03T21-03-04Z-cpuv1
     container_name: cubos_minio
     command: server /data --console-address ":9001"
     environment:
