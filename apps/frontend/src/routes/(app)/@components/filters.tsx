@@ -1,14 +1,29 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
+import dayjs from "dayjs";
+import customParseFormat from "dayjs/plugin/customParseFormat";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 import searchIcon from "@/assets/icons/search.svg";
 import { AddMovie } from "./form/movie/add-movie";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { FiltersForm } from "./form/filters";
+
+dayjs.extend(customParseFormat);
 
 export function Filters() {
   const navigate = useNavigate();
+
+  const [filtersOpen, setFiltersOpen] = useState(false);
   const [searchTitle, setSearchTitle] = useState("");
 
   useEffect(() => {
@@ -16,11 +31,12 @@ export function Filters() {
     const handler = setTimeout(() => {
       navigate({
         to: "/",
-        search: {
+        search: (prev) => ({
+          ...prev,
           ...(searchTitle.length
             ? { title: searchTitle }
             : { title: undefined }),
-        },
+        }),
       });
     }, debounceDelay);
 
@@ -51,7 +67,26 @@ export function Filters() {
         </label>
       </div>
 
-      <Button className="bg-primary/20 hover:bg-primary/30">Filtros</Button>
+      <Dialog open={filtersOpen} onOpenChange={setFiltersOpen}>
+        <DialogTrigger asChild>
+          <Button className="bg-primary/20 hover:bg-primary/30">Filtros</Button>
+        </DialogTrigger>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle>Filtros</DialogTitle>
+            <DialogDescription>
+              Selecione os filtros abaixo para aplicar
+            </DialogDescription>
+          </DialogHeader>
+
+          <FiltersForm
+            onApplyFilters={() => {
+              setFiltersOpen(false);
+            }}
+          />
+        </DialogContent>
+      </Dialog>
+
       <AddMovie />
     </section>
   );

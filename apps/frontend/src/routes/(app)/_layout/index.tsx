@@ -25,10 +25,16 @@ export const Route = createFileRoute("/(app)/_layout/")({
 });
 
 function AppHomePage() {
-  const { page, title } = Route.useSearch();
+  const { page, title, duration, releaseStart, releaseEnd, director, status } =
+    Route.useSearch();
   const { data: movies, isPending: isMoviesPending } = useListMovies({
     page,
     title,
+    duration,
+    releaseStart,
+    releaseEnd,
+    director,
+    status,
   });
 
   return (
