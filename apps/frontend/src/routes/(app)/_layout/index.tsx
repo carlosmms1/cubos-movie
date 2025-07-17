@@ -54,6 +54,11 @@ function AppHomePage() {
             genre={movie.genre}
           />
         ))}
+        {!movies?.data.length && (
+          <span className="col-span-12 text-muted-foreground">
+            {`Lamentamos, mas não encontramos nenhum filme cadastrado... :(`}
+          </span>
+        )}
       </section>
 
       <footer className="flex items-center justify-center">
