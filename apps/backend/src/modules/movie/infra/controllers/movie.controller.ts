@@ -7,12 +7,15 @@ import {
   Request,
   BadRequestException,
   UseGuards,
+  Get,
+  Query,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { AuthGuard } from '@nestjs/passport';
 
 import { CreateMovieDTO } from '../../app/dtos/create-movie.dto';
 import { MovieService } from '../../app/services/movie.service';
+import { ListMovieDTO } from '../../app/dtos/list-movie.dto';
 
 @UseGuards(AuthGuard('jwt'))
 @Controller('movies')
@@ -32,5 +35,10 @@ export class MovieController {
     createMovieDto.coverImage =
       await this.movieService.uploadCoverImage(coverImage);
     return this.movieService.createMovie(createMovieDto, req.user?.id);
+  }
+
+  @Get()
+  async list(@Query() query: ListMovieDTO) {
+    return this.movieService.list(query);
   }
 }

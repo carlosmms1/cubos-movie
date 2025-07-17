@@ -1,8 +1,11 @@
 import { Injectable } from '@nestjs/common';
 
+import { Prisma } from 'generated/prisma';
+
 import { PrismaService } from 'src/modules/prisma/prisma.service';
 import { StorageService } from 'src/modules/shared/app/services/storage.service';
 import { CreateMovieDTO } from '../dtos/create-movie.dto';
+import { ListMovieDTO } from '../dtos/list-movie.dto';
 
 @Injectable()
 export class MovieService {
@@ -38,5 +41,66 @@ export class MovieService {
         creator: { connect: { id: creatorId } },
       },
     });
+  }
+
+  async list(params: ListMovieDTO) {
+    const {
+      title,
+      status,
+      director,
+      duration,
+      releaseStart,
+      releaseEnd,
+      page = 1,
+      pageSize = 10,
+    } = params;
+
+    const where: Prisma.MovieWhereInput = {};
+
+    if (title) {
+      where.OR = [
+        { title: { contains: title, mode: 'insensitive' } },
+        { originalTitle: { contains: title, mode: 'insensitive' } },
+      ];
+    }
+    if (status) {
+      where.status = status;
+    }
+    if (director) {
+      where.director = { contains: director, mode: 'insensitive' };
+    }
+    if (duration) {
+      where.duration = duration;
+    }
+    if (releaseStart || releaseEnd) {
+      where.release = {};
+      if (releaseStart) {
+        where.release.gte = new Date(releaseStart);
+      }
+      if (releaseEnd) {
+        where.release.lte = new Date(releaseEnd);
+      }
+    }
+
+    const skip = (page - 1) * pageSize;
+    const [movies, total] = await this.prisma.$transaction([
+      this.prisma.movie.findMany({
+        where,
+        skip,
+        take: pageSize,
+        orderBy: { release: 'desc' },
+      }),
+      this.prisma.movie.count({ where }),
+    ]);
+
+    return {
+      data: movies,
+      meta: {
+        page,
+        pageSize,
+        total,
+        totalPages: Math.ceil(total / pageSize),
+      },
+    };
   }
 }
