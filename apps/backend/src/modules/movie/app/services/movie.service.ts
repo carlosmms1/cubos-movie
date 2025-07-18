@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  ForbiddenException,
+} from '@nestjs/common';
 
 import { Prisma } from 'generated/prisma';
 
@@ -62,6 +66,20 @@ export class MovieService {
         creator: { connect: { id: creatorId } },
       },
     });
+  }
+
+  async deleteMovie(id: string, userId: string) {
+    const movie = await this.prisma.movie.findUnique({ where: { id } });
+    if (!movie) {
+      throw new NotFoundException('Filme não encontrado!');
+    }
+    if (movie.creatorId !== userId) {
+      throw new ForbiddenException(
+        'Você não tem permissão para deletar este filme.',
+      );
+    }
+    await this.prisma.movie.delete({ where: { id } });
+    return { message: 'Filme deletado com sucesso.' };
   }
 
   async list(params: ListMovieDTO) {

@@ -10,6 +10,7 @@ import {
   Get,
   Query,
   Param,
+  Delete,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { AuthGuard } from '@nestjs/passport';
@@ -46,5 +47,10 @@ export class MovieController {
   @Get(':id')
   async findById(@Param('id') id: string) {
     return this.movieService.findById(id);
+  }
+
+  @Delete(':id')
+  async delete(@Param('id') id: string, @Request() req) {
+    return this.movieService.deleteMovie(id, req.user?.id);
   }
 }
