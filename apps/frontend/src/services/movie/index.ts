@@ -18,7 +18,7 @@ export interface Movie {
   popularity: number;
   voteCount: number;
   coverImage: string;
-  createdById: string;
+  creatorId: string;
   createdAt: string;
   updatedAt: string;
 }
