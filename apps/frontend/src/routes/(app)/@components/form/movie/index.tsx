@@ -28,16 +28,19 @@ import { maskDate } from "@/lib/masks/date";
 type MovieFormProps = {
   onSubmit?: (data: MovieFormSchema) => void;
   isPending?: boolean;
+  defaultValues?: Partial<MovieFormSchema>;
 };
 
 export function MovieForm({
   onSubmit = () => {},
   isPending = false,
+  defaultValues = {},
 }: MovieFormProps) {
   const form = useForm<MovieFormSchema>({
     resolver: zodResolver(movieFormSchema),
     defaultValues: {
       status: "UPCOMING",
+      ...defaultValues,
     },
   });
   const control = form.control;

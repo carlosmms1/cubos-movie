@@ -9,6 +9,7 @@ import { languagesTitles } from "@/utils/languages";
 import { genresTitles } from "@/utils/genres";
 import { useAuth } from "@/hooks/use-auth";
 import { useDeleteMovie } from "@/hooks/mutations/movie";
+import { UpdateMovie } from "../@components/form/movie/update-movie";
 
 dayjs.extend(customParseFormat);
 
@@ -71,7 +72,7 @@ function MoviePage() {
               >
                 Deletar
               </Button>
-              <Button>Editar</Button>
+              <UpdateMovie movieId={movie.id} />
             </div>
           )}
         </div>
