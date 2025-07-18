@@ -30,3 +30,4 @@ export {
   type ListMoviesResponse,
 } from "./list-movies";
 export { getMovie } from "./get-movie";
+export { deleteMovie } from "./delete-movie";

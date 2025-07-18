@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { languagesTitles } from "@/utils/languages";
 import { genresTitles } from "@/utils/genres";
 import { useAuth } from "@/hooks/use-auth";
+import { useDeleteMovie } from "@/hooks/mutations/movie";
 
 dayjs.extend(customParseFormat);
 
@@ -25,6 +26,9 @@ function MoviePage() {
   const { data: movie } = useGetMovie(movieId);
 
   const { creatorId } = useAuth();
+
+  const { mutate: deleteMovie, isPending: isDeleteMoviePending } =
+    useDeleteMovie();
 
   return (
     <div className="overflow-hidden">
@@ -57,7 +61,14 @@ function MoviePage() {
 
           {creatorId === movie?.creatorId && (
             <div className="space-x-4">
-              <Button className="bg-primary/20 hover:bg-primary/30">
+              <Button
+                disabled={isDeleteMoviePending}
+                type="button"
+                className="bg-primary/20 hover:bg-primary/30"
+                onClick={() => {
+                  deleteMovie(movie.id);
+                }}
+              >
                 Deletar
               </Button>
               <Button>Editar</Button>
