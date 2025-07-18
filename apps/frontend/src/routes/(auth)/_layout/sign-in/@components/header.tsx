@@ -8,7 +8,7 @@ export function Header() {
     <header className="flex justify-between p-4 border-b text-primary-foreground bg-background/60 backdrop-blur-sm">
       <div className="flex space-x-4 items-center">
         <Link to="/">
-          <img src="/assets/cubos-logo.png" alt="cubos logo" className="h-6" />
+          <img src="/assets/cubos-logo.svg" alt="cubos logo" className="h-6" />
         </Link>
         <p className="font-medium">Movies</p>
       </div>
