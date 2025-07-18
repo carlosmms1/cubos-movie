@@ -31,3 +31,4 @@ export {
 } from "./list-movies";
 export { getMovie } from "./get-movie";
 export { deleteMovie } from "./delete-movie";
+export { updateMovie } from "./update-movie";
