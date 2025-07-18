@@ -9,6 +9,7 @@ import {
   UseGuards,
   Get,
   Query,
+  Param,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { AuthGuard } from '@nestjs/passport';
@@ -40,5 +41,10 @@ export class MovieController {
   @Get()
   async list(@Query() query: ListMovieDTO) {
     return this.movieService.list(query);
+  }
+
+  @Get(':id')
+  async findById(@Param('id') id: string) {
+    return this.movieService.findById(id);
   }
 }

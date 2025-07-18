@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 
 import { Prisma } from 'generated/prisma';
 
@@ -16,6 +16,27 @@ export class MovieService {
 
   async uploadCoverImage(file: Express.Multer.File): Promise<string> {
     return this.storage.uploadFile(file);
+  }
+
+  async findById(id: string) {
+    const movie = await this.prisma.movie.findUnique({
+      where: { id },
+      include: {
+        creator: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+          },
+        },
+      },
+    });
+
+    if (!movie) {
+      throw new NotFoundException(`Filme não encontrado!`);
+    }
+
+    return movie;
   }
 
   async createMovie(data: CreateMovieDTO, creatorId: string) {
