@@ -51,10 +51,10 @@ function MoviePage() {
 
         <div className="flex items-start justify-between">
           <div className="leading-tight">
-            <h1 className="text-[32px] font-semibold text-primary-foreground">
+            <h1 className="text-[32px] font-semibold text-secondary dark:text-primary-foreground">
               {movie?.title}
             </h1>
-            <h2 className="text-[16px] text-primary-foreground/80">
+            <h2 className="text-[16px] text-secondary/80 dark:text-primary-foreground/80">
               Título original: {movie?.originalTitle}
             </h2>
           </div>
