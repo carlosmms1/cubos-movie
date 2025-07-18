@@ -1,7 +1,6 @@
+import { SunIcon } from "@/assets/icons/sun";
 import { useTheme } from "./theme-provider";
 import { Button } from "./ui/button";
-
-import sunIcon from "@/assets/icons/sun.svg";
 
 export function ModeToggle() {
   const { setTheme, theme } = useTheme();
@@ -12,11 +11,11 @@ export function ModeToggle() {
 
   return (
     <Button
-      className="bg-primary/10 hover:bg-primary/15"
+      className="bg-primary/50 hover:bg-primary/50 dark:bg-primary/10  dark:hover:bg-primary/15"
       onClick={toggleTheme}
       type="button"
     >
-      <img src={sunIcon} aria-hidden={true} />
+      <SunIcon className="text-primary-foreground h-6 w-6" />
     </Button>
   );
 }

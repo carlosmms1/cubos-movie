@@ -12,9 +12,18 @@ export function Header() {
     <header className="flex justify-between p-4 border-b text-primary-foreground bg-background/60 backdrop-blur-sm">
       <div className="flex space-x-4 items-center">
         <Link to="/">
-          <img src="/assets/cubos-logo.png" alt="cubos logo" className="h-6" />
+          <img
+            src="/assets/cubos-logo.svg"
+            alt="cubos logo"
+            className="h-6 hidden dark:block"
+          />
+          <img
+            src="/assets/cubos-dark-logo.svg"
+            alt="cubos logo"
+            className="h-6 dark:hidden"
+          />
         </Link>
-        <p className="font-medium">Movies</p>
+        <p className="font-medium text-primary-foreground">Movies</p>
       </div>
       <div className="flex items-center space-x-2">
         <ModeToggle />

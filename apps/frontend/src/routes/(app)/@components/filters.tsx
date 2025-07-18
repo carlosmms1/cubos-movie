@@ -6,7 +6,6 @@ import customParseFormat from "dayjs/plugin/customParseFormat";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-import searchIcon from "@/assets/icons/search.svg";
 import { AddMovie } from "./form/movie/add-movie";
 import {
   Dialog,
@@ -17,6 +16,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { FiltersForm } from "./form/filters";
+import { SearchIcon } from "@/assets/icons/search";
 
 dayjs.extend(customParseFormat);
 
@@ -63,7 +63,7 @@ export function Filters() {
           aria-controls="search"
           htmlFor="search"
         >
-          <img src={searchIcon} aria-hidden={true} />
+          <SearchIcon className="text-primary-foreground" />
         </label>
       </div>
 

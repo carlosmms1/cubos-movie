@@ -41,7 +41,7 @@ function AppHomePage() {
     <div className="flex flex-col gap-6 p-6 h-full">
       <Filters />
 
-      <section className="flex-1 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 rounded-xs bg-secondary/70 backdrop-blur-sm p-6">
+      <section className="flex-1 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 rounded-xs bg-secondary/70 backdrop-blur-sm p-6 shadow">
         {isMoviesPending &&
           Array.from({ length: 10 }).map((_, idx) => (
             <MovieCardPlaceholder key={idx} />
