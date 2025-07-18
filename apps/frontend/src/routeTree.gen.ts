@@ -14,6 +14,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as authLayoutRouteImport } from './routes/(auth)/_layout'
 import { Route as appLayoutRouteImport } from './routes/(app)/_layout'
 import { Route as appLayoutIndexRouteImport } from './routes/(app)/_layout/index'
+import { Route as appLayoutMovieIdRouteImport } from './routes/(app)/_layout/$movieId'
 import { Route as authLayoutSignUpIndexRouteImport } from './routes/(auth)/_layout/sign-up/index'
 import { Route as authLayoutSignInIndexRouteImport } from './routes/(auth)/_layout/sign-in/index'
 
@@ -41,6 +42,11 @@ const appLayoutIndexRoute = appLayoutIndexRouteImport.update({
   path: '/',
   getParentRoute: () => appLayoutRoute,
 } as any)
+const appLayoutMovieIdRoute = appLayoutMovieIdRouteImport.update({
+  id: '/$movieId',
+  path: '/$movieId',
+  getParentRoute: () => appLayoutRoute,
+} as any)
 const authLayoutSignUpIndexRoute = authLayoutSignUpIndexRouteImport.update({
   id: '/sign-up/',
   path: '/sign-up/',
@@ -54,11 +60,13 @@ const authLayoutSignInIndexRoute = authLayoutSignInIndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof appLayoutIndexRoute
+  '/$movieId': typeof appLayoutMovieIdRoute
   '/sign-in': typeof authLayoutSignInIndexRoute
   '/sign-up': typeof authLayoutSignUpIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof appLayoutIndexRoute
+  '/$movieId': typeof appLayoutMovieIdRoute
   '/sign-in': typeof authLayoutSignInIndexRoute
   '/sign-up': typeof authLayoutSignUpIndexRoute
 }
@@ -68,21 +76,23 @@ export interface FileRoutesById {
   '/(app)/_layout': typeof appLayoutRouteWithChildren
   '/(auth)': typeof authRouteWithChildren
   '/(auth)/_layout': typeof authLayoutRouteWithChildren
+  '/(app)/_layout/$movieId': typeof appLayoutMovieIdRoute
   '/(app)/_layout/': typeof appLayoutIndexRoute
   '/(auth)/_layout/sign-in/': typeof authLayoutSignInIndexRoute
   '/(auth)/_layout/sign-up/': typeof authLayoutSignUpIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/sign-in' | '/sign-up'
+  fullPaths: '/' | '/$movieId' | '/sign-in' | '/sign-up'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/sign-in' | '/sign-up'
+  to: '/' | '/$movieId' | '/sign-in' | '/sign-up'
   id:
     | '__root__'
     | '/(app)'
     | '/(app)/_layout'
     | '/(auth)'
     | '/(auth)/_layout'
+    | '/(app)/_layout/$movieId'
     | '/(app)/_layout/'
     | '/(auth)/_layout/sign-in/'
     | '/(auth)/_layout/sign-up/'
@@ -130,6 +140,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof appLayoutIndexRouteImport
       parentRoute: typeof appLayoutRoute
     }
+    '/(app)/_layout/$movieId': {
+      id: '/(app)/_layout/$movieId'
+      path: '/$movieId'
+      fullPath: '/$movieId'
+      preLoaderRoute: typeof appLayoutMovieIdRouteImport
+      parentRoute: typeof appLayoutRoute
+    }
     '/(auth)/_layout/sign-up/': {
       id: '/(auth)/_layout/sign-up/'
       path: '/sign-up'
@@ -148,10 +165,12 @@ declare module '@tanstack/react-router' {
 }
 
 interface appLayoutRouteChildren {
+  appLayoutMovieIdRoute: typeof appLayoutMovieIdRoute
   appLayoutIndexRoute: typeof appLayoutIndexRoute
 }
 
 const appLayoutRouteChildren: appLayoutRouteChildren = {
+  appLayoutMovieIdRoute: appLayoutMovieIdRoute,
   appLayoutIndexRoute: appLayoutIndexRoute,
 }
 

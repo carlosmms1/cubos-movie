@@ -1,6 +1,5 @@
 import { api } from "@/lib/connection";
-
-type Status = "RELEASED" | "UPCOMING";
+import type { Movie, Status } from ".";
 
 export interface ListMoviesParams {
   title?: string;
@@ -11,30 +10,6 @@ export interface ListMoviesParams {
   releaseEnd?: string; // ISO string
   page?: number;
   pageSize?: number;
-}
-
-export interface Movie {
-  id: string;
-  title: string;
-  originalTitle: string;
-  description: string;
-  release: string;
-  duration: number;
-  genre: string[];
-  languages: string[];
-  director: string;
-  cast: string;
-  budget?: string;
-  revenue?: string;
-  profit?: string;
-  trailerUrl?: string;
-  status: Status;
-  popularity: number;
-  voteCount: number;
-  coverImage: string;
-  createdById: string;
-  createdAt: string;
-  updatedAt: string;
 }
 
 export interface ListMoviesResponse {

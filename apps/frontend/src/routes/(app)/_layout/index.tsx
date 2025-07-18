@@ -52,9 +52,11 @@ function AppHomePage() {
             coverImage={movie.coverImage}
             title={movie.title}
             genre={movie.genre}
+            to="/$movieId"
+            params={{ movieId: movie.id }}
           />
         ))}
-        {!movies?.data.length && (
+        {!movies?.data.length && !isMoviesPending && (
           <span className="col-span-12 text-muted-foreground">
             {`Lamentamos, mas não encontramos nenhum filme cadastrado... :(`}
           </span>

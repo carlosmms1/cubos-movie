@@ -1,12 +1,22 @@
+import { Link, type LinkComponentProps } from "@tanstack/react-router";
+
 type MovieCardProps = {
   coverImage: string;
   title: string;
   genre?: string[];
-};
+} & LinkComponentProps<"a">;
 
-export function MovieCard({ coverImage, title, genre }: MovieCardProps) {
+export function MovieCard({
+  coverImage,
+  title,
+  genre,
+  ...props
+}: MovieCardProps) {
   return (
-    <div className="hover:scale-[101%] transition-[scale] cursor-pointer">
+    <Link
+      {...props}
+      className="hover:scale-[101%] transition-[scale] cursor-pointer"
+    >
       <div className="relative h-full">
         <div className="relative min-w-[255px] w-full min-h-[355px] h-full">
           <img
@@ -33,7 +43,7 @@ export function MovieCard({ coverImage, title, genre }: MovieCardProps) {
           )}
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
 

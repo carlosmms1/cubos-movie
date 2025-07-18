@@ -1,1 +1,2 @@
-export { useMovies } from "./use-movies";
+export { useListMovies } from "./use-movies";
+export { useGetMovie } from "./use-movie";
