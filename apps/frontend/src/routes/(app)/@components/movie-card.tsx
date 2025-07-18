@@ -23,11 +23,11 @@ export function MovieCard({ coverImage, title, genre }: MovieCardProps) {
           />
         </div>
         <div className="absolute left-4 bottom-4 space-y-2">
-          <p className="font-medium uppercase text-primary-foreground">
+          <p className="font-medium uppercase text-secondary dark:text-primary-foreground">
             {title}
           </p>
           {genre && (
-            <p className="text-sm font-light text-primary-foreground/60">
+            <p className="text-sm font-light text-secondary/60 dark:text-primary-foreground/60">
               {genre.join(", ")}
             </p>
           )}
