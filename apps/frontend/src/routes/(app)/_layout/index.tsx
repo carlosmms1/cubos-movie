@@ -52,6 +52,7 @@ function AppHomePage() {
             coverImage={movie.coverImage}
             title={movie.title}
             genre={movie.genre}
+            creatorId={movie.creatorId}
             to="/$movieId"
             params={{ movieId: movie.id }}
           />

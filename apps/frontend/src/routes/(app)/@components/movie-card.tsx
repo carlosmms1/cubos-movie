@@ -1,23 +1,34 @@
+import { Badge } from "@/components/ui/badge";
+import { useAuth } from "@/hooks/use-auth";
 import { Link, type LinkComponentProps } from "@tanstack/react-router";
 
 type MovieCardProps = {
+  creatorId: string;
   coverImage: string;
   title: string;
   genre?: string[];
 } & LinkComponentProps<"a">;
 
 export function MovieCard({
+  creatorId,
   coverImage,
   title,
   genre,
   ...props
 }: MovieCardProps) {
+  const { creatorId: userId } = useAuth();
+
   return (
     <Link
       {...props}
       className="hover:scale-[101%] transition-[scale] cursor-pointer"
     >
       <div className="relative h-full">
+        {userId === creatorId && (
+          <Badge className="absolute bg-primary/80 top-4 left-4 rounded-xs z-50">
+            MEU FILME
+          </Badge>
+        )}
         <div className="relative min-w-[255px] w-full min-h-[355px] h-full">
           <img
             className="w-full h-full object-cover rounded-xs shadow"
