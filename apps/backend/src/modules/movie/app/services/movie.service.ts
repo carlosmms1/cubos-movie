@@ -82,6 +82,22 @@ export class MovieService {
     return { message: 'Filme deletado com sucesso.' };
   }
 
+  async updateMovie(id: string, data: Partial<CreateMovieDTO>, userId: string) {
+    const movie = await this.prisma.movie.findUnique({ where: { id } });
+    if (!movie) {
+      throw new NotFoundException('Filme não encontrado!');
+    }
+    if (movie.creatorId !== userId) {
+      throw new ForbiddenException(
+        'Você não tem permissão para editar este filme.',
+      );
+    }
+    return this.prisma.movie.update({
+      where: { id },
+      data,
+    });
+  }
+
   async list(params: ListMovieDTO) {
     const {
       title,

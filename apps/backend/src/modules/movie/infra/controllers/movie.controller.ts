@@ -11,6 +11,7 @@ import {
   Query,
   Param,
   Delete,
+  Patch,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { AuthGuard } from '@nestjs/passport';
@@ -52,5 +53,14 @@ export class MovieController {
   @Delete(':id')
   async delete(@Param('id') id: string, @Request() req) {
     return this.movieService.deleteMovie(id, req.user?.id);
+  }
+
+  @Patch(':id')
+  async update(
+    @Param('id') id: string,
+    @Body() data: Partial<CreateMovieDTO>,
+    @Request() req,
+  ) {
+    return this.movieService.updateMovie(id, data, req.user?.id);
   }
 }
